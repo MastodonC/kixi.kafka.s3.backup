@@ -2,7 +2,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "mastodonc/kixi.kafka.s3.backup:git-xxxxxxxxx",
+      "image": "mastodonc/kixi.kafka.s3.backup:git-@@DOCKERID@@",
       "parameters": [
 	 {"key": "shm-size", "value": "1536m"},
 	 {"key": "env", "value": "ZK_CONNECT=master.mesos:2181/dcos-service-kafka"},

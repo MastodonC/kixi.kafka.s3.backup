@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 MASTER=$1
-TAG=$2
-NUMBER=$3
+DOCKERID=$2
+TAG=$3
+NUMBER=$4
 
-sed -e "s/@@TAG@@/$TAG/" -e "s/@@NUMBER@@/$NUMBER/" -e "s%@@AWS_ACCESS_KEY_ID@@%${AWS_ACCESS_KEY_ID}%" -e "s%@@AWS_SECRET_KEY@@%${AWS_SECRET_KEY}%" -e "s/@@S3_BUCKET@@/${S3_BUCKET}/" -e "s/@@ZK_CONNECT@@/${ZK_CONNECT}/" -e "s/@@KAFKA_TOPIC@@/${KAFKA_TOPIC}/" -e "s/@@KAFKA_CONSUMER_GROUP@@/${KAFKA_CONSUMER_GROUP}/"  kafkabackup-stream-config.json.template > kafkabackup-stream-config-$NUMBER.json
+sed -e "s/@@TAG@@/$TAG/" -e "s/@@NUMBER@@/$NUMBER/" -e "s%@@AWS_ACCESS_KEY_ID@@%${AWS_ACCESS_KEY_ID}%" -e "s%@@AWS_SECRET_KEY@@%${AWS_SECRET_KEY}%" -e "s/@@S3_BUCKET@@/${S3_BUCKET}/" -e "s/@@ZK_CONNECT@@/${ZK_CONNECT}/" -e "s/@@KAFKA_TOPIC@@/${KAFKA_TOPIC}/" -e "s/@@KAFKA_CONSUMER_GROUP@@/${KAFKA_CONSUMER_GROUP}/" -e "s/@@DOCKERID@@/${DOCKERID}/"  kafkabackup-stream-config.json.template > kafkabackup-stream-config-$NUMBER.json
 
 
 # we want curl to output something we can use to indicate success/failure
