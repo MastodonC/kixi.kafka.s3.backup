@@ -25,11 +25,10 @@
       (cstr/join "," brokers))))
 
 (defn process-data [data-in]
-  (let [incoming-message (shared/deserialize-message data-in)]
-    (do
-      (-> incoming-message
-          shared/gzip-serializer-fn
-          (shared/upload-file-to-s3 "raw")))))
+  (do
+    (-> data-in
+        shared/gzip-serializer-fn
+        (shared/upload-file-to-s3 "raw"))))
 
 (defn start-stream []
   (let [broker-list (broker-str {:servers (env :zk-connect)})
