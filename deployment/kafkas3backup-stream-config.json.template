@@ -1,0 +1,30 @@
+{
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "mastodonc/kixi.kafka.s3.backup:git-@@DOCKERID@@",
+      "parameters": [
+	 {"key": "shm-size", "value": "1536m"},
+	 {"key": "env", "value": "ZK_CONNECT=master.mesos:2181/dcos-service-kafka"},
+         {"key": "env", "value": "AWS_ACCESS_KEY_ID=@@AWS_ACCESS_KEY_ID@@"},
+         {"key": "env", "value": "AWS_SECRET_KEY=@@AWS_SECRET_KEY@@"},
+         {"key": "env", "value": "KAFKA_TOPIC=@@KAFKA_TOPIC@@"},
+         {"key": "env", "value": "KAFKA_CONSUMER_GROUP=@@KAFKA_CONSUMER_GROUP@@"},
+         {"key": "env", "value": "S3_BUCKET=@@S3_BUCKET@@"},
+         {"key": "env", "value": "NUMBER=@@NUMBER@@"}
+      ],
+      "network": "BRIDGE",
+      "portMappings": [
+          {
+              "containerPort": 18082,
+              "hostPort": 18082,
+              "protocol": "tcp"
+          }
+      ]
+    }
+  },
+  "mem": 2048,
+  "cpus": 1,
+  "instances": 1,
+  "id": "kixi.kafka.s3.backup-@@NUMBER@@"
+}
