@@ -28,7 +28,7 @@
   (do
     (-> data-in
         shared/gzip-serializer-fn
-        (shared/upload-file-to-s3 (str "raw/" topic)))))
+        (shared/upload-file-to-s3 topic))))
 
 (defn start-stream []
   (let [broker-list (broker-str {:servers (env :zk-connect)})

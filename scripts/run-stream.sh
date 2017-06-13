@@ -35,4 +35,4 @@ echo "Starting Kafka Stream Backup"
 echo "Peer Java Options: $PEER_JAVA_OPTS"
 
 
-/usr/bin/java $PEER_JAVA_OPTS -jar /opt/kafka-stream-backup.jar
+/usr/bin/java $PEER_JAVA_OPTS -jar /opt/kafka-streams-backup.jar

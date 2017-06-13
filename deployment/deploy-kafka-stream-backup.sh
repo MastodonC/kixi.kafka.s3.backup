@@ -4,10 +4,10 @@ MASTER=$1
 TAG=$2
 NUMBER=$3
 S3_BUCKET=$4
-KAFKA_TOPICS=hecuba.measurements,hecuba.tariffs
+KAFKA_TOPICS=measurements,tariffs
 KAFKA_CONSUMER_GROUP=kixi.kafka.s3.backup
 
-sed -e "s/@@TAG@@/$TAG/" -e "s/@@NUMBER@@/$NUMBER/" -e "s/@@S3_BUCKET@@/${S3_BUCKET}/" -e "s/@@KAFKA_TOPICS@@/${KAFKA_TOPICS}/" -e "s/@@KAFKA_CONSUMER_GROUP@@/${KAFKA_CONSUMER_GROUP}/" -e "s/@@DOCKERID@@/${DOCKERID}/"  kafkabackup-stream-config.json.template > kafkabackup-stream-config-$NUMBER.json
+sed -e "s/@@TAG@@/$TAG/" -e "s/@@NUMBER@@/$NUMBER/" -e "s/@@S3_BUCKET@@/${S3_BUCKET}/" -e "s/@@KAFKA_TOPICS@@/${KAFKA_TOPICS}/" -e "s/@@KAFKA_CONSUMER_GROUP@@/${KAFKA_CONSUMER_GROUP}/" -e "s/@@DOCKERID@@/${DOCKERID}/"  kafkas3backup-stream-config.json.template > kafkabackup-stream-config-$NUMBER.json
 
 
 # we want curl to output something we can use to indicate success/failure
