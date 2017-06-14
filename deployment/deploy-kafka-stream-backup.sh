@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
 MASTER=$1
-DOCKERID=$2
-TAG=$3
-NUMBER=$4
+TAG=$2
+NUMBER=$3
+S3_BUCKET=$4
+KAFKA_TOPICS=measurements,tariffs
+KAFKA_CONSUMER_GROUP=kixi.kafka.s3.backup
 
-sed -e "s/@@TAG@@/$TAG/" -e "s/@@NUMBER@@/$NUMBER/" -e "s%@@AWS_ACCESS_KEY_ID@@%${AWS_ACCESS_KEY_ID}%" -e "s%@@AWS_SECRET_KEY@@%${AWS_SECRET_KEY}%" -e "s/@@S3_BUCKET@@/${S3_BUCKET}/" -e "s/@@ZK_CONNECT@@/${ZK_CONNECT}/" -e "s/@@KAFKA_TOPIC@@/${KAFKA_TOPIC}/" -e "s/@@KAFKA_CONSUMER_GROUP@@/${KAFKA_CONSUMER_GROUP}/" -e "s/@@DOCKERID@@/${DOCKERID}/"  kafkabackup-stream-config.json.template > kafkabackup-stream-config-$NUMBER.json
+sed -e "s/@@TAG@@/$TAG/" -e "s/@@NUMBER@@/$NUMBER/" -e "s/@@S3_BUCKET@@/${S3_BUCKET}/" -e "s/@@KAFKA_TOPICS@@/${KAFKA_TOPICS}/" -e "s/@@KAFKA_CONSUMER_GROUP@@/${KAFKA_CONSUMER_GROUP}/" -e "s/@@DOCKERID@@/${DOCKERID}/"  kafkas3backup-stream-config.json.template > kafkabackup-stream-config-$NUMBER.json
 
 
 # we want curl to output something we can use to indicate success/failure

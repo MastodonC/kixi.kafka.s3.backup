@@ -24,11 +24,11 @@
       (first brokers)
       (cstr/join "," brokers))))
 
-(defn process-data [data-in]
+(defn process-data [data-in topic]
   (do
     (-> data-in
         shared/gzip-serializer-fn
-        (shared/upload-file-to-s3 "raw"))))
+        (shared/upload-file-to-s3 topic))))
 
 (defn start-stream []
   (let [broker-list (broker-str {:servers (env :zk-connect)})
@@ -40,14 +40,14 @@
                StreamsConfig/VALUE_SERDE_CLASS_CONFIG, (.getName (.getClass (Serdes/ByteArray)))}
         builder (KStreamBuilder.)
         config (StreamsConfig. props)
-        input-topic (into-array String [(env :kafka-topic)])]
+        topics (clojure.string/split (env :kafka-topics) #",")]
     (log/infof "Zookeeper Address: %s" (env :zk-connect))
     (log/infof "Broker List: %s" broker-list)
-    (log/infof "Kafka Topic: %s" (env :kafka-topic))
+    (log/infof "Kafka Topics: %s" topics)
     (log/infof "Kafka Consumer Group: %s" (env :kafka-consumer-group))
     (log/infof "S3 Bucket: %s" (env :s3-bucket))
-    (do (->
-         (.stream builder input-topic)
-         (.mapValues (reify ValueMapper (apply [_ v] (process-data v))))
-         (.print))
+    (do (doseq [topic topics]
+          (-> (.stream builder (into-array String [topic]))
+              (.mapValues (reify ValueMapper (apply [_ v] (process-data v topic))))
+              (.print)))
         (KafkaStreams. builder config))))

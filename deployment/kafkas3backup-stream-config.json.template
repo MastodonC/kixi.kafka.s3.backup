@@ -2,13 +2,11 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "mastodonc/kixi.kafka.s3.backup:git-@@DOCKERID@@",
+      "image": "mastodonc/kixi.kafka.s3.backup:git-@@TAG@@",
       "parameters": [
 	 {"key": "shm-size", "value": "1536m"},
-	 {"key": "env", "value": "ZK_CONNECT=master.mesos:2181/dcos-service-kafka"},
-         {"key": "env", "value": "AWS_ACCESS_KEY_ID=@@AWS_ACCESS_KEY_ID@@"},
-         {"key": "env", "value": "AWS_SECRET_KEY=@@AWS_SECRET_KEY@@"},
-         {"key": "env", "value": "KAFKA_TOPIC=@@KAFKA_TOPIC@@"},
+	 {"key": "env", "value": "ZK_CONNECT=master.mesos:2181/dcos-service-confluent-kafka"},
+         {"key": "env", "value": "KAFKA_TOPICS=@@KAFKA_TOPICS@@"},
          {"key": "env", "value": "KAFKA_CONSUMER_GROUP=@@KAFKA_CONSUMER_GROUP@@"},
          {"key": "env", "value": "S3_BUCKET=@@S3_BUCKET@@"},
          {"key": "env", "value": "NUMBER=@@NUMBER@@"}
