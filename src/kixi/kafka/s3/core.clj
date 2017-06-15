@@ -30,8 +30,7 @@
            java.io.ByteArrayInputStream.
            io/reader
            slurp)
-       (catch Exception e (log/info (.printStackTrace e)))
-       (finally (log/info "deserialization failed"))))
+       (catch Exception e (log/info (.printStackTrace e)))))
 
 (defn process-data [data-in topic]
   (do
