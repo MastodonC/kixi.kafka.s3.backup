@@ -4,6 +4,7 @@
             [franzy.admin.zookeeper.client :as client]
             [franzy.admin.cluster :as cluster]
             [clojure.string :as cstr]
+            [clojure.java.io :as io]
             [taoensso.timbre :as log]
             [environ.core :refer [env]])
   (:import [org.apache.kafka.streams.kstream KStreamBuilder ValueMapper]
@@ -24,9 +25,18 @@
       (first brokers)
       (cstr/join "," brokers))))
 
+(defn deserialize-message [bytes]
+  (try (-> bytes
+           java.io.ByteArrayInputStream.
+           io/reader
+           slurp)
+       (catch Exception e (log/info (.printStackTrace e)))
+       (finally (log/info "deserialization failed"))))
+
 (defn process-data [data-in topic]
   (do
     (-> data-in
+        deserialize-message
         shared/gzip-serializer-fn
         (shared/upload-file-to-s3 (str "/" topic)))))
 
