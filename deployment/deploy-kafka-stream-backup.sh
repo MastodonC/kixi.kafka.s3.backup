@@ -4,7 +4,7 @@ MASTER=$1
 TAG=$2
 NUMBER=$3
 S3_BUCKET=$4
-KAFKA_TOPICS=measurements,tariffs
+KAFKA_TOPICS=measurements,tariffs,measurements-error
 KAFKA_CONSUMER_GROUP=kixi.kafka.s3.backup
 
 sed -e "s/@@TAG@@/$TAG/" -e "s/@@NUMBER@@/$NUMBER/" -e "s/@@S3_BUCKET@@/${S3_BUCKET}/" -e "s/@@KAFKA_TOPICS@@/${KAFKA_TOPICS}/" -e "s/@@KAFKA_CONSUMER_GROUP@@/${KAFKA_CONSUMER_GROUP}/" -e "s/@@DOCKERID@@/${DOCKERID}/"  kafkas3backup-stream-config.json.template > kafkabackup-stream-config-$NUMBER.json
